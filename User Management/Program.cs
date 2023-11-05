@@ -1,22 +1,22 @@
+using webapi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// loading services
+ConfigManager configManager = new(builder);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// connecting to the database
+configManager.ConfigureDBConnection("DefaultConnection");
 
-var app = builder.Build();
+var app = configManager.GetApp();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+configManager.AllowSwaggerUI();
 
 app.UseHttpsRedirection();
+
+// add CORS middleware
+app.UseCors(); // this is for the default policy
 
 app.UseAuthorization();
 
