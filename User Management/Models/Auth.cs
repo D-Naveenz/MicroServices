@@ -20,6 +20,10 @@ public partial class Auth
     [StringLength(45)]
     public string Password { get; set; }
 
+    [Required]
+    [Column("salt")]
+    public byte[] Salt { get; set; }
+
     [ForeignKey("UserId")]
     [InverseProperty("Auth")]
     public virtual User User { get; set; }

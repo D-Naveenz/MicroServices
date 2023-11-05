@@ -32,16 +32,6 @@ namespace webapi.Services
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            // adding the session service
-            builder.Services.AddDistributedMemoryCache();
-
-            builder.Services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
         }
 
         public void AddConfiguration(string jsonFilePath)
@@ -85,6 +75,19 @@ namespace webapi.Services
                 _app.UseSwagger();
                 _app.UseSwaggerUI();
             }
+        }
+
+        public void AddSession()
+        {
+            // adding the session service
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
     }
 }

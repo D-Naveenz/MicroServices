@@ -1,4 +1,5 @@
 using webapi.Services;
+using User_Management.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,12 @@ app.UseCors(); // this is for the default policy
 
 app.UseAuthorization();
 
+// app.UseSession();
+
 app.MapControllers();
+
+app.MapUserEndpoints();
+
+app.MapAuthEndpoints();
 
 app.Run();
