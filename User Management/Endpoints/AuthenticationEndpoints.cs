@@ -14,17 +14,6 @@ public static class AuthenticationEndpoints
     {
         var group = routes.MapGroup("/api/Auth").WithTags(nameof(Auth));
 
-        group.MapGet("/{id}", async Task<Results<Ok<Auth>, NotFound>> (Guid userid, middlewaredbContext db) =>
-        {
-            return await db.Auth.AsNoTracking()
-                .FirstOrDefaultAsync(model => model.UserId == userid.ToByteArray())
-                is Auth model
-                    ? TypedResults.Ok(model)
-                    : TypedResults.NotFound();
-        })
-        .WithName("CheckAccountExists")
-        .WithOpenApi();
-
         group.MapPost("/", async Task<Results<Ok<Guid>, UnauthorizedHttpResult>> (UserData data, middlewaredbContext db) =>
         {
             // get user by username
